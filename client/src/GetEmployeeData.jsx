@@ -116,8 +116,8 @@ function GetEmployeeData () {
 
 
     return (<><div className="container text-center w-50">
-    <h1 className="mt-4 mb-3">Employee List</h1>
-    <table className="table">
+    <h2 className="mt-4 mb-3 text-start">Employee <b>Details</b></h2>
+    <table className="table table-striped table-bordered">
       <thead>
         <tr>
           <th>Name</th>
