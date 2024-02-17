@@ -72,16 +72,16 @@ function GetEmployeeData () {
         }
         try {
             if (isUpdate) {
-                setFormData({ name: '', email: '', phone: '' }); // Clear form after submission
-                setIsUpdate(false); // Reset update mode
+                setFormData({ name: '', email: '', phone: '' }); 
+                setIsUpdate(false);
                 await axios.put(`${url}/${updateId}`, formData);
             } else {
                 await axios.post(`${url}/`, formData);
             }
             fetchEmployees();
-            setFormData({ name: '', email: '', phone: '' }); // Clear form after submission
-            setShowForm(false); // Hide the form after submission
-            setIsUpdate(false); // Reset update mode
+            setFormData({ name: '', email: '', phone: '' });
+            setShowForm(false); 
+            setIsUpdate(false);
         } catch (error) {
             console.error(isUpdate ? 'Error updating employee:' : 'Error adding employee:', error);
         }
@@ -114,8 +114,16 @@ function GetEmployeeData () {
     if(error) return <p>Error: {error}</p>
     if(loading) return <p>Loading...</p>
 
+    const button = `.fixed-width-btn {
+      width: 200px;
+    }`
 
-    return (<><div className="container text-center w-50">
+
+    return (<>
+    <style>
+      {button}
+    </style>
+    <div className="container text-center w-50">
     <h2 className="mt-4 mb-3 text-start">Employee <b>Details</b></h2>
     <table className="table table-striped table-bordered">
       <thead>
@@ -142,11 +150,11 @@ function GetEmployeeData () {
     </table>
   </div>
     <div className="text-center">
-      <button className="btn btn-primary mb-3" onClick={() => {isUpdate ? setShowForm(showForm): setShowForm(!showForm), setIsUpdate(false), setFormData({ name: '', email: '', phone: '' }), setErrors({});}}>Add New</button>
+      <button className="btn btn-primary mb-3 fixed-width-btn" onClick={() => {isUpdate ? setShowForm(showForm): setShowForm(!showForm), setIsUpdate(false), setFormData({ name: '', email: '', phone: '' }), setErrors({});}}>{showForm ? 'Close' : 'Add Employee'}</button>
     </div>
     {showForm && (
       <div className="d-flex justify-content-center text-center">
-      <div className="justify-content-center align-content-center text-center  w-25 card mb-4">
+      <div className="d-flex justify-content-center align-content-center text-center  w-25 card mb-4">
         <h3 className="card-header">{isUpdate ? 'Update Employee' : 'Add Employee'}</h3>
         <div className="card-body">
           <form onSubmit={handleAddOrUpdate}>
