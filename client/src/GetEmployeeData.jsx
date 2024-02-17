@@ -15,6 +15,7 @@ function GetEmployeeData () {
     const [showForm, setShowForm] = useState(false);
     const [isUpdate, setIsUpdate] = useState(false);
     const [updateId, setUpdateId] = useState(null);
+    const [errors, setErrors] = useState({});
 
     useEffect(() => {
         fetchEmployees();
@@ -37,8 +38,38 @@ function GetEmployeeData () {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    const validateForm = () => {
+      let isValid = true;
+      const errors = {};
+  
+      if (!formData.name.trim()) {
+        errors.name = 'Name is required';
+        isValid = false;
+      }
+  
+      if (!formData.email.trim()) {
+        errors.email = 'Email is required';
+        isValid = false;
+      } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+        errors.email = 'Email is invalid';
+        isValid = false;
+      }
+  
+      if (!formData.phone.trim()) {
+        errors.phone = 'Phone is required';
+        isValid = false;
+      }
+  
+      setErrors(errors);
+      return isValid;
+    };
+
     const handleAddOrUpdate = async (e) => {
         e.preventDefault();
+        setErrors({});
+        if (!validateForm()) {
+          return;
+        }
         try {
             if (isUpdate) {
                 setFormData({ name: '', email: '', phone: '' }); // Clear form after submission
@@ -62,7 +93,8 @@ function GetEmployeeData () {
             setIsUpdate(false);
             setUpdateId(null);
         } else {
-            setFormData({ name: employee.name, email: employee.email, phone: employee.phone });
+          setErrors({});
+            setFormData({ name: employee.name, email: employee.email, phone: String(employee.phone) });
             setShowForm(true);
             setIsUpdate(true);
             setUpdateId(employee._id);
@@ -110,11 +142,11 @@ function GetEmployeeData () {
     </table>
   </div>
     <div className="text-center">
-      <button className="btn btn-primary mb-3" onClick={() => {isUpdate ? setShowForm(showForm): setShowForm(!showForm), setIsUpdate(false), setFormData({ name: '', email: '', phone: '' })}}>Add New</button>
+      <button className="btn btn-primary mb-3" onClick={() => {isUpdate ? setShowForm(showForm): setShowForm(!showForm), setIsUpdate(false), setFormData({ name: '', email: '', phone: '' }), setErrors({});}}>Add New</button>
     </div>
     {showForm && (
       <div className="d-flex justify-content-center text-center">
-      <div className="justify-content-center align-content-center text-center  w-45 card mb-4">
+      <div className="justify-content-center align-content-center text-center  w-25 card mb-4">
         <h3 className="card-header">{isUpdate ? 'Update Employee' : 'Add Employee'}</h3>
         <div className="card-body">
           <form onSubmit={handleAddOrUpdate}>
@@ -122,31 +154,34 @@ function GetEmployeeData () {
               <label>Name:</label>
               <input
                 type="text"
-                className="form-control"
+                className={`form-control ${errors.name && 'is-invalid'}`}
                 name="name"
                 value={formData.name}
                 onChange={handleInputChange}
               />
+              {errors.name && <div className="invalid-feedback">{errors.name}</div>}
             </div>
             <div className="form-group">
               <label>Email:</label>
               <input
                 type="email"
-                className="form-control"
+                className={`form-control ${errors.email && 'is-invalid'}`}
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
               />
+              {errors.email && <div className="invalid-feedback">{errors.email}</div>}
             </div>
             <div className="form-group">
               <label>Phone:</label>
               <input
                 type="text"
-                className="form-control"
+                className={`form-control ${errors.phone && 'is-invalid'}`}
                 name="phone"
                 value={formData.phone}
                 onChange={handleInputChange}
               />
+              {errors.phone && <div className="invalid-feedback">{errors.phone}</div>}
             </div>
             <button type="submit" className="btn btn-success mt-4">{isUpdate ? 'Update Employee' : 'Add Employee'}</button>
           </form>
