@@ -21,7 +21,7 @@ function GetEmployeeData () {
         fetchEmployees();
     },[])
 
-    const url = 'http://192.168.1.25:4002';
+    const url = 'https://employee-metricoid.vercel.app';
 
     const fetchEmployees = async() => {
         try{
