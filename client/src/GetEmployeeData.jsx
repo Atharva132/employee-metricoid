@@ -119,86 +119,90 @@ function GetEmployeeData () {
     }`
 
 
-    return (<>
-    <style>
-      {button}
-    </style>
-    <div className="container text-center w-50">
-    <h2 className="mt-4 mb-3 text-start">Employee <b>Details</b></h2>
-    <table className="table table-striped table-bordered">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Phone</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        {employees.map(employee => (
-          <tr key={employee._id}>
-            <td>{employee.name}</td>
-            <td>{employee.email}</td>
-            <td>{employee.phone}</td>
-            <td>
-            <button className="btn btn-primary p-1 mx-3 my-2" onClick={() => handleUpdate(employee)}>Update</button>
-                <button className="btn btn-danger p-1 me-1" onClick={() => handleDelete(employee._id)}>Delete</button>
-              </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-    <div className="text-center">
-      <button className="btn btn-primary mb-3 fixed-width-btn" onClick={() => {isUpdate ? setShowForm(showForm): setShowForm(!showForm), setIsUpdate(false), setFormData({ name: '', email: '', phone: '' }), setErrors({});}}>{showForm ? 'Close' : 'Add Employee'}</button>
-    </div>
-    {showForm && (
-      <div className="d-flex justify-content-center text-center">
-      <div className="d-flex justify-content-center align-content-center text-center  w-25 card mb-4">
-        <h3 className="card-header">{isUpdate ? 'Update Employee' : 'Add Employee'}</h3>
-        <div className="card-body">
-          <form onSubmit={handleAddOrUpdate}>
-            <div className="form-group">
-              <label>Name:</label>
-              <input
-                type="text"
-                className={`form-control ${errors.name && 'is-invalid'}`}
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-              />
-              {errors.name && <div className="invalid-feedback">{errors.name}</div>}
-            </div>
-            <div className="form-group">
-              <label>Email:</label>
-              <input
-                type="email"
-                className={`form-control ${errors.email && 'is-invalid'}`}
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-              />
-              {errors.email && <div className="invalid-feedback">{errors.email}</div>}
-            </div>
-            <div className="form-group">
-              <label>Phone:</label>
-              <input
-                type="text"
-                className={`form-control ${errors.phone && 'is-invalid'}`}
-                name="phone"
-                value={formData.phone}
-                onChange={handleInputChange}
-              />
-              {errors.phone && <div className="invalid-feedback">{errors.phone}</div>}
-            </div>
-            <button type="submit" className="btn btn-success mt-4">{isUpdate ? 'Update Employee' : 'Add Employee'}</button>
-          </form>
+    return (<div className="container mt-4">
+    <div className="row justify-content-center">
+      
+      <div className="col-lg-8 col-md-10">
+      <h2 className="mb-3">Employee <b>Details</b></h2>
+        <div className="table-responsive">
+          <table className="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {employees.map(employee => (
+                <tr key={employee._id}>
+                  <td>{employee.name}</td>
+                  <td>{employee.email}</td>
+                  <td>{employee.phone}</td>
+                  <td className="d-flex flex-column flex-md-row justify-content-md-center align-items-md-center">
+                    <button className="btn btn-primary p-1 mx-2 my-1 my-md-0" onClick={() => handleUpdate(employee)}>Update</button>
+                    <button className="btn btn-danger p-1 mx-2 my-1 my-md-0" onClick={() => handleDelete(employee._id)}>Delete</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
+    </div>
+    <div className="text-center">
+      <button className="btn btn-primary mb-3 fixed-width-btn" onClick={() => {setShowForm(!showForm), setIsUpdate(false), setFormData({ name: '', email: '', phone: '' }), setErrors({})}}>{showForm ? 'Close' : 'Add Employee'}</button>
+    </div>
+    {showForm && (
+      <div className="row justify-content-center">
+        <div className="col-lg-4 col-mb-4 col-sm-8">
+          <div className="card mb-4">
+            <h3 className="card-header text-center">{isUpdate ? 'Update Employee' : 'Add Employee'}</h3>
+            <div className="card-body">
+              <form onSubmit={handleAddOrUpdate}>
+                <div className="form-group">
+                  <label>Name:</label>
+                  <input
+                    type="text"
+                    className={`form-control ${errors.name && 'is-invalid'}`}
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                  />
+                  {errors.name && <div className="invalid-feedback">{errors.name}</div>}
+                </div>
+                <div className="form-group">
+                  <label>Email:</label>
+                  <input
+                    type="email"
+                    className={`form-control ${errors.email && 'is-invalid'}`}
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                  />
+                  {errors.email && <div className="invalid-feedback">{errors.email}</div>}
+                </div>
+                <div className="form-group">
+                  <label>Phone:</label>
+                  <input
+                    type="text"
+                    className={`form-control ${errors.phone && 'is-invalid'}`}
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                  />
+                  {errors.phone && <div className="invalid-feedback">{errors.phone}</div>}
+                </div>
+                <button type="submit" className="btn btn-success mt-4">{isUpdate ? 'Update Employee' : 'Add Employee'}</button>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
     )}
-  </>
-)
+  </div>  
+    )  
 }
 
 export default GetEmployeeData
