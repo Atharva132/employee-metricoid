@@ -122,7 +122,7 @@ function GetEmployeeData () {
     return (<div className="container mt-4">
     <div className="row justify-content-center">
       
-      <div className="col-lg-8 col-md-10">
+      <div className="col-lg-6 col-md-10 col-sm-10">
       <h2 className="mb-3">Employee <b>Details</b></h2>
         <div className="table-responsive">
           <table className="table table-striped table-bordered">
