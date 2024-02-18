@@ -186,11 +186,15 @@ function GetEmployeeData () {
                 <div className="form-group">
                   <label>Phone:</label>
                   <input
-                    type="text"
+                    type="number"
                     className={`form-control ${errors.phone && 'is-invalid'}`}
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
+                    min="0" 
+                    max="9999999999"
+                    onKeyDown={(evt) => ["e", "E", "+", "-"].includes(evt.key) && evt.preventDefault()}
+                    step="1"
                   />
                   {errors.phone && <div className="invalid-feedback">{errors.phone}</div>}
                 </div>
